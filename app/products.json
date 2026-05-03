@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "UV Protection Sunglasses",
+    "brand": "SunShade",
+    "price": 15,
+    "rating": 4.7,
+    "stock": 10,
+    "description": "Stylish UV protection sunglasses perfect for summer outings.",
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083",
+    "category": "Accessories"
+  },
+  {
+    "id": 2,
+    "name": "Beach T-Shirt",
+    "brand": "CoolWear",
+    "price": 20,
+    "rating": 4.5,
+    "stock": 12,
+    "description": "Lightweight breathable t-shirt ideal for hot summer days.",
+    "image": "https://images.unsplash.com/photo-1520975916090-3105956dac38",
+    "category": "Clothing"
+  },
+  {
+    "id": 3,
+    "name": "Summer Hat",
+    "brand": "SunnyStyle",
+    "price": 12,
+    "rating": 4.3,
+    "stock": 15,
+    "description": "Protect yourself from sun with this stylish hat.",
+    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
+    "category": "Accessories"
+  },
+  {
+    "id": 4,
+    "name": "SPF 50 Sunscreen",
+    "brand": "SkinCarePro",
+    "price": 18,
+    "rating": 4.8,
+    "stock": 20,
+    "description": "High protection sunscreen for long summer exposure.",
+    "image": "https://images.unsplash.com/photo-1585386959984-a4155224a1ad",
+    "category": "Skincare"
+  },
+  {
+    "id": 5,
+    "name": "Beach Sandals",
+    "brand": "WalkEasy",
+    "price": 25,
+    "rating": 4.6,
+    "stock": 9,
+    "description": "Comfortable sandals perfect for beach walking.",
+    "image": "https://images.unsplash.com/photo-1528701800489-20be3c4b7d3c",
+    "category": "Footwear"
+  },
+  {
+    "id": 6,
+    "name": "Water Bottle",
+    "brand": "HydroMax",
+    "price": 10,
+    "rating": 4.4,
+    "stock": 30,
+    "description": "Stay hydrated with this stylish reusable bottle.",
+    "image": "https://images.unsplash.com/photo-1526406915894-7bcd65f60845",
+    "category": "Essentials"
+  }
+]
