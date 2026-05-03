@@ -2,63 +2,57 @@ import { fallbackAuth } from "@/lib/auth-fallback";
 
 const useFallback = process.env.NODE_ENV === "development" && !process.env.BETTER_AUTH_SECRET;
 
-let realAuthHandler = null;
-
 const getHandler = async () => {
-  if (!realAuthHandler) {
-    try {
-      const authModule = await import("@/lib/auth");
-      realAuthHandler = authModule.auth.handler;
-    } catch (err) {
-      console.error("[Auth Route] Failed to import auth handler:", err);
-      return null;
-    }
+  if (useFallback) {
+    return fallbackAuth.handler;
   }
-  return realAuthHandler;
+  try {
+    const { auth } = await import("@/lib/auth");
+    return auth.handler;
+  } catch (err) {
+    console.error("[Auth] Failed to import auth handler:", err);
+    throw err;
+  }
 };
 
-const wrapHandler = (handler) => {
-  return async (req, res) => {
-    try {
-      const origin = req.headers.get("origin");
-      const host = req.headers.get("host");
-      console.log(`[Auth] Request from origin: ${origin}, host: ${host}`);
-      
-      return await handler(req, res);
-    } catch (error) {
-      console.error("[Auth Route] Error:", error);
-      if (error.message?.includes("Invalid origin")) {
-        const origin = req.headers.get("origin");
-        const host = req.headers.get("host");
-        console.error(
-          `[Auth] Origin validation failed. origin: ${origin}, host: ${host}. Set BETTER_AUTH_URL on Vercel.`
-        );
-        return Response.json(
-          {
-            error: {
-              message: `Invalid origin: ${origin}. Please set BETTER_AUTH_URL in Vercel environment variables.`,
-            },
-          },
-          { status: 400 }
-        );
-      }
-      throw error;
+let cachedHandler = null;
+
+const handler = async (req) => {
+  try {
+    // Log request details for debugging
+    const origin = req.headers.get("origin");
+    const host = req.headers.get("host");
+    const url = req.nextUrl.pathname;
+    
+    console.log(`[Auth Route] ${req.method} ${url} | origin: ${origin} | host: ${host}`);
+
+    if (!cachedHandler) {
+      cachedHandler = await getHandler();
     }
-  };
-};
 
-const handler = useFallback
-  ? fallbackAuth.handler
-  : async (req, res) => {
-      const realHandler = await getHandler();
-      if (!realHandler) {
-        return Response.json(
-          { error: { message: "Auth service unavailable" } },
-          { status: 500 }
-        );
-      }
-      return wrapHandler(realHandler)(req, res);
-    };
+    const response = await cachedHandler(req);
+    return response;
+  } catch (error) {
+    console.error("[Auth Route] Handler error:", error);
+    
+    // Return a more helpful error response
+    if (error.message?.includes("Invalid origin") || error.message?.includes("invalid origin")) {
+      return Response.json(
+        {
+          error: {
+            message: `Invalid origin. Please ensure BETTER_AUTH_SECRET and BETTER_AUTH_URL are set in environment variables.`,
+          },
+        },
+        { status: 400 }
+      );
+    }
+    
+    return Response.json(
+      { error: { message: "Authentication service error" } },
+      { status: 500 }
+    );
+  }
+};
 
 export const GET = handler;
 export const POST = handler;
