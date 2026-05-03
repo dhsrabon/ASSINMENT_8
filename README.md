@@ -33,24 +33,45 @@ A modern summer eCommerce platform where users can explore and purchase seasonal
 
 ## Getting Started
 
+### Local Development
+
 1. Clone the repository
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Set up environment variables in `.env`:
+3. Create `.env.local` and set up environment variables:
    ```
-   BETTER_AUTH_SECRET=your-secret-key
+   BETTER_AUTH_SECRET=dev-secret-key
    BETTER_AUTH_URL=http://localhost:3000
    NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
-   GOOGLE_CLIENT_ID=your-google-client-id
-   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   GOOGLE_CLIENT_ID=your-google-client-id (optional)
+   GOOGLE_CLIENT_SECRET=your-google-client-secret (optional)
    ```
 4. Run the development server:
    ```bash
    npm run dev
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Vercel Deployment
+
+1. Push your code to GitHub/GitLab
+2. Connect your repository to Vercel
+3. Go to **Project Settings > Environment Variables** and add:
+   - `BETTER_AUTH_SECRET`: Generate a random secret (e.g., `openssl rand -base64 32`)
+   - `BETTER_AUTH_URL`: Set to your Vercel production URL (e.g., `https://your-app.vercel.app`)
+   - `NEXT_PUBLIC_BETTER_AUTH_URL`: Same as BETTER_AUTH_URL
+   - `GOOGLE_CLIENT_ID`: (Optional) Your Google OAuth client ID
+   - `GOOGLE_CLIENT_SECRET`: (Optional) Your Google OAuth client secret
+4. Deploy! The app automatically detects your Vercel domain
+
+**Important**: If you get an "Invalid origin" error, ensure:
+- `BETTER_AUTH_SECRET` is set
+- `BETTER_AUTH_URL` matches your Vercel domain
+- All three URLs are using `https://` (not `http://`)
+
+See [.env.example](.env.example) for all available environment variables.
 
 ## Project Structure
 ```
@@ -76,11 +97,19 @@ lib/
 ```
 
 ## Deployment
-This application is configured for deployment on Vercel or Render. Ensure that:
-- Environment variables are set in the deployment platform
+This application is configured for deployment on Vercel. The authentication system uses SQLite which is stored temporarily during each deployment.
+
+### Vercel Specific Notes:
+- Database resets on each deployment (SQLite is ephemeral on Vercel)
+- For persistent authentication data in production, consider migrating to MongoDB or PostgreSQL
+- Auth routes handle both localhost and Vercel preview URLs automatically
 - The build command is `npm run build`
 - The start command is `npm start`
-- For SPA routing, configure the platform to serve `index.html` for all routes
+
+### To Deploy:
+1. Connect your Git repository to Vercel
+2. Add required environment variables (see Getting Started > Vercel Deployment)
+3. Click "Deploy"
 
 ## Challenges Implemented
 - **My Profile**: Displays user information (name, photo, email)
