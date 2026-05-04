@@ -2,8 +2,7 @@
 
 A modern, fully responsive summer eCommerce platform where users can explore and purchase seasonal products including sunglasses, summer outfits, skincare, beach accessories, and more. Built with Next.js 16, React 19, and BetterAuth.
 
-## 🌐 Live URL
-🔗 **[https://summer-shop.vercel.app](https://summer-shop.vercel.app)** (Update with your Vercel URL)
+
 
 ## ✨ Key Features
 
