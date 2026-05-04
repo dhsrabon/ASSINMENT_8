@@ -211,33 +211,3 @@ export default function UpdateProfilePage() {
     </section>
   );
 }
-          </div>
-
-          {user.image && (
-            <div className="flex justify-center">
-              <img
-                src={user.image}
-                alt="preview"
-                className="w-24 h-24 rounded-full object-cover border-2 border-orange-300"
-              />
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn btn-warning w-full mt-6 text-white"
-          >
-            {loading ? "Updating..." : "Update Profile"}
-          </button>
-        </form>
-
-        <div className="text-center mt-4">
-          <Link href="/my-profile" className="text-orange-500 hover:underline">
-            Back to Profile
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}

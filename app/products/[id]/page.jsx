@@ -160,11 +160,3 @@ export default function ProductDetails({ params: paramsPromise }) {
     </section>
   );
 }
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
