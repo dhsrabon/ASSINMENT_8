@@ -14,63 +14,66 @@ const schema = z.object({
 
 export default function Register() {
   const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    
+
     const form = new FormData(e.currentTarget);
+
     const parsed = schema.safeParse({
       name: form.get("name"),
       email: form.get("email"),
       password: form.get("password"),
     });
-    
+
     if (!parsed.success) {
       setError(parsed.error.issues[0].message);
       return;
     }
-    
+
     setLoading(true);
+
     try {
-      const result = await authClient.signUp({
+      const result = await authClient.signUp.email({
+        name: parsed.data.name,
         email: parsed.data.email,
         password: parsed.data.password,
-        name: parsed.data.name,
       });
-      
-      if (result.error) {
-        setError(result.error.message || "Registration failed");
-        setLoading(false);
+
+      if (result?.error) {
+        setError(result.error.message || "An error occurred during registration");
         return;
       }
-      
+
       router.push("/login");
     } catch (err) {
-      setError(err.message || "An error occurred during registration");
+      setError(err?.message || "An error occurred during registration");
+    } finally {
       setLoading(false);
     }
   };
 
   const handleGoogle = async () => {
+    setError("");
+
     try {
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/",
       });
     } catch (err) {
-      setError("Google sign-in failed");
+      setError(err?.message || "Google sign-in failed");
     }
   };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 px-4 py-8">
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-white shadow-2xl rounded-3xl p-8 md:p-10 animate__animated animate__fadeInUp">
-          {/* Header */}
           <div className="text-center mb-8">
             <div className="text-5xl mb-4">🌞</div>
             <h1 className="text-3xl md:text-4xl font-bold text-orange-500 mb-2">
@@ -81,14 +84,12 @@ export default function Register() {
             </p>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md mb-6 animate__animated animate__shakeX">
               <p className="text-red-700 text-sm font-semibold">{error}</p>
             </div>
           )}
 
-          {/* Registration Form */}
           <form onSubmit={handleSubmit} className="space-y-4 mb-6">
             <div className="form-control">
               <label className="label">
@@ -133,7 +134,9 @@ export default function Register() {
                 placeholder="••••••••"
                 className="input input-bordered input-md focus:input-warning w-full transition"
               />
-              <p className="text-xs text-gray-500 mt-1">At least 6 characters</p>
+              <p className="text-xs text-gray-500 mt-1">
+                At least 6 characters
+              </p>
             </div>
 
             <button
@@ -152,10 +155,8 @@ export default function Register() {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="divider text-xs text-gray-500">OR</div>
 
-          {/* Google Register */}
           <button
             type="button"
             onClick={handleGoogle}
@@ -165,7 +166,6 @@ export default function Register() {
             Sign up with Google
           </button>
 
-          {/* Login Link */}
           <p className="text-center mt-6 text-gray-700">
             Already have an account?{" "}
             <Link
@@ -176,7 +176,6 @@ export default function Register() {
             </Link>
           </p>
 
-          {/* Info Box */}
           <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-xs md:text-sm text-gray-600">
               <span className="font-bold text-blue-600">✓ Free & Secure:</span>
