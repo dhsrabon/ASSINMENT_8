@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import products from "../products.json";
+import ProductCard from "../components/ProductCard";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -46,56 +46,12 @@ export default function ProductsPage() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product, index) => (
-            <div
+            <ProductCard
               key={product.id}
-              className="card bg-white shadow-xl hover:shadow-2xl transition animate__animated animate__fadeInUp"
-              style={{ animationDelay: `${(index % 3) * 0.1}s` }}
-            >
-              <figure className="h-56">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-full w-full object-cover"
-                />
-              </figure>
-
-              <div className="card-body">
-                <div className="flex justify-between items-start mb-2">
-                  <p className="badge badge-info text-xs md:text-sm">
-                    {product.category}
-                  </p>
-                  <p className="text-xs md:text-sm text-slate-500">
-                    Stock: {product.stock}
-                  </p>
-                </div>
-
-                <h3 className="card-title text-lg md:text-base">
-                  {product.name}
-                </h3>
-
-                <p className="text-xs md:text-sm text-slate-600 font-semibold">
-                  {product.brand}
-                </p>
-
-                <div className="flex justify-between items-center my-3">
-                  <p className="text-sm md:text-base text-slate-500">
-                    ⭐ {product.rating}
-                  </p>
-                  <p className="text-2xl md:text-xl font-bold text-orange-500">
-                    ${product.price}
-                  </p>
-                </div>
-
-                <div className="card-actions justify-end gap-2 mt-4">
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="btn btn-warning btn-sm md:btn-md"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            </div>
+              product={product}
+              index={index}
+              animationDelay={(index % 3) * 0.1}
+            />
           ))}
         </div>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import products from "./products.json";
+import ProductCard from "./components/ProductCard";
 
 export default function Home() {
   const popularProducts = products.slice(0, 3);
@@ -36,40 +37,12 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {popularProducts.map((product, index) => (
-            <div
+            <ProductCard
               key={product.id}
-              className="card bg-white shadow-xl hover:shadow-2xl transition animate__animated animate__fadeInUp"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <figure className="h-56">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-full w-full object-cover"
-                />
-              </figure>
-
-              <div className="card-body">
-                <h3 className="card-title text-lg">{product.name}</h3>
-
-                <p className="text-sm text-slate-500">
-                  Rating: ⭐ {product.rating}
-                </p>
-
-                <p className="text-xl font-bold text-orange-500">
-                  ${product.price}
-                </p>
-
-                <div className="card-actions justify-end">
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="btn btn-sm btn-warning"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            </div>
+              product={product}
+              index={index}
+              animationDelay={index * 0.1}
+            />
           ))}
         </div>
       </section>
