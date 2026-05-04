@@ -30,7 +30,7 @@ export default function Footer() {
             <h3 className="font-bold mb-4 text-lg">Contact</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>📧 support@summershop.com</li>
-              <li>📞 +880123456789</li>
+              <li>📞 +8801511995451</li>
               <li>🏪 Summer Store, Beach City</li>
             </ul>
           </div>
