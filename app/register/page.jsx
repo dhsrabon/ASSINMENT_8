@@ -66,98 +66,126 @@ export default function Register() {
   };
 
   return (
-    <div className="container flex min-h-[80vh] items-center justify-center py-12">
-      <div className="w-full max-w-md rounded-lg border bg-white p-8 shadow-lg">
-        <div className="mb-6 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-yellow-400 shadow-lg text-2xl">
-            ☀️
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 px-4 py-8">
+      <div className="w-full max-w-md">
+        {/* Card */}
+        <div className="bg-white shadow-2xl rounded-3xl p-8 md:p-10 animate__animated animate__fadeInUp">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="text-5xl mb-4">🌞</div>
+            <h1 className="text-3xl md:text-4xl font-bold text-orange-500 mb-2">
+              Join SummerShop
+            </h1>
+            <p className="text-gray-600 text-sm md:text-base">
+              Create your account and enjoy summer deals
+            </p>
           </div>
-          <h1 className="text-3xl font-bold">Join SunCart</h1>
-          <p className="mt-1 text-sm text-gray-600">Create your account and ride the summer wave</p>
-        </div>
 
-        {error && (
-          <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md mb-6 animate__animated animate__shakeX">
+              <p className="text-red-700 text-sm font-semibold">{error}</p>
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              placeholder="Your name"
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="you@summer.com"
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              placeholder="At least 6 characters"
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:outline-none"
-            />
-          </div>
+          {/* Registration Form */}
+          <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  👤 Full Name
+                </span>
+              </label>
+              <input
+                name="name"
+                type="text"
+                required
+                placeholder="Your full name"
+                className="input input-bordered input-md focus:input-warning w-full transition"
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  📧 Email Address
+                </span>
+              </label>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="your@email.com"
+                className="input input-bordered input-md focus:input-warning w-full transition"
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  🔒 Password
+                </span>
+              </label>
+              <input
+                name="password"
+                type="password"
+                required
+                placeholder="••••••••"
+                className="input input-bordered input-md focus:input-warning w-full transition"
+              />
+              <p className="text-xs text-gray-500 mt-1">At least 6 characters</p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-warning btn-lg w-full text-white font-bold mt-4 hover:shadow-lg transition"
+            >
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner loading-sm"></span>
+                  Creating Account...
+                </>
+              ) : (
+                "Register"
+              )}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="divider text-xs text-gray-500">OR</div>
+
+          {/* Google Register */}
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-md bg-yellow-400 py-2 font-semibold text-white hover:bg-yellow-500 disabled:opacity-50"
+            type="button"
+            onClick={handleGoogle}
+            className="btn btn-outline btn-lg w-full hover:bg-orange-50 transition font-semibold"
           >
-            {loading ? "Creating..." : "Register"}
+            <span className="text-xl">🔐</span>
+            Sign up with Google
           </button>
-        </form>
 
-        <div className="my-5 flex items-center gap-3">
-          <div className="h-px flex-1 bg-gray-300" />
-          <span className="text-xs uppercase tracking-widest text-gray-500">or</span>
-          <div className="h-px flex-1 bg-gray-300" />
+          {/* Login Link */}
+          <p className="text-center mt-6 text-gray-700">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-orange-500 font-bold hover:text-orange-600 transition"
+            >
+              Login here
+            </Link>
+          </p>
+
+          {/* Info Box */}
+          <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-xs md:text-sm text-gray-600">
+              <span className="font-bold text-blue-600">✓ Free & Secure:</span>
+              <br />
+              Your data is encrypted and secure with BetterAuth
+            </p>
+          </div>
         </div>
-
-        <button
-          type="button"
-          onClick={handleGoogle}
-          className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white py-2 hover:bg-gray-50"
-        >
-          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-            <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z" />
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" />
-          </svg>
-          Continue with Google
-        </button>
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-yellow-600 hover:underline">
-            Login
-          </Link>
-        </p>
       </div>
-    </div>
+    </section>
   );
 }

@@ -47,53 +47,109 @@ function LoginContent() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-orange-50 px-4">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
-        <h1 className="text-3xl font-bold text-center text-orange-500 mb-6">
-          Login
-        </h1>
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 px-4 py-8">
+      <div className="w-full max-w-md">
+        {/* Card */}
+        <div className="bg-white shadow-2xl rounded-3xl p-8 md:p-10 animate__animated animate__fadeInUp">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="text-5xl mb-4">🕶️</div>
+            <h1 className="text-3xl md:text-4xl font-bold text-orange-500 mb-2">
+              Welcome Back
+            </h1>
+            <p className="text-gray-600 text-sm md:text-base">
+              Sign in to explore summer products
+            </p>
+          </div>
 
-        {error && (
-          <p className="bg-red-100 text-red-600 p-3 rounded mb-4">
-            {error}
-          </p>
-        )}
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md mb-6 animate__animated animate__shakeX">
+              <p className="text-red-700 text-sm font-semibold">{error}</p>
+            </div>
+          )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            className="input input-bordered w-full"
-            required
-          />
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-4 mb-6">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  📧 Email Address
+                </span>
+              </label>
+              <input
+                name="email"
+                type="email"
+                placeholder="your@email.com"
+                className="input input-bordered input-md focus:input-warning w-full transition"
+                required
+              />
+            </div>
 
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            className="input input-bordered w-full"
-            required
-          />
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  🔒 Password
+                </span>
+              </label>
+              <input
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                className="input input-bordered input-md focus:input-warning w-full transition"
+                required
+              />
+            </div>
 
-          <button className="btn btn-warning w-full" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            <button
+              className="btn btn-warning btn-lg w-full text-white font-bold mt-2 hover:shadow-lg transition"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner loading-sm"></span>
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="divider text-xs text-gray-500">OR</div>
+
+          {/* Google Login */}
+          <button
+            onClick={handleGoogleLogin}
+            className="btn btn-outline btn-lg w-full hover:bg-orange-50 transition font-semibold"
+          >
+            <span className="text-xl">🔐</span>
+            Continue with Google
           </button>
-        </form>
 
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline w-full mt-4"
-        >
-          Continue with Google
-        </button>
+          {/* Register Link */}
+          <p className="text-center mt-6 text-gray-700">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/register"
+              className="text-orange-500 font-bold hover:text-orange-600 transition"
+            >
+              Register here
+            </Link>
+          </p>
 
-        <p className="text-center mt-5">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-orange-500 font-semibold">
-            Register
-          </Link>
-        </p>
+          {/* Info Box */}
+          <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
+            <p className="text-xs md:text-sm text-gray-600">
+              <span className="font-bold text-orange-600">Demo Credentials:</span>
+              <br />
+              Email: demo@example.com
+              <br />
+              Password: password123
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
